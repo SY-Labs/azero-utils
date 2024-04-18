@@ -1,5 +1,5 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { Header,Event } from '@polkadot/types/interfaces';
+import { Header, Event, EventRecord } from '@polkadot/types/interfaces';
 
 import { ContractPromise } from '@polkadot/api-contract';
 
@@ -21,6 +21,13 @@ api.rpc.chain.subscribeNewHeads((lastHead: Header): void => {
 // const callValue = await contract.query["psp22Metadata::tokenName"]("5CJzYSKs56uLoDGhA142evVg4PUnE7tuawEv9GsdKcCiEiHt", {})
 // console.log(callValue.output)
 
-api.query.system.events((events: [Event]) => {
-    events.forEach(e => console.log('event hash: ', e.hash.toHex()))
+api.query.system.events((events: [EventRecord]) => {
+    events.filter(e => e.event.meta.name.toString() == "ContractEmitted").forEach(e => {
+        // e.event.meta.name
+        // let event = contract.abi.decodeEvent(e);
+        // console.log(e.event.meta.name.toString() == "ContractEmitted");
+        // console.log(e.event.section.toString() == "contracts");
+        console.log("contract address", e.event.data["contract"].toString())
+
+    })
 })
