@@ -11,22 +11,24 @@ Azero-Utils is a utility package designed to facilitate interaction within the A
 ### Installation
 
 ```bash
-npm install azero-utils
+npm i azero-utils
 ```
 
 ### Example Usage
 
 ```javascript
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { ContractEvents } from "./ContractEvents"
 import { ContractPromise } from '@polkadot/api-contract';
+import { ContractEvents } from "azero-utils"
+
+const ADDRESS = "5Cr8SncyKaM8C5V47hv3GvaZt8zAvnbrmafDL3zTXz5xQwZn";
 
 // Connect to Aleph zero node
 const wsProvider = new WsProvider("wss://ws.test.azero.dev");
 const api = await ApiPromise.create({ provider: wsProvider });
 
 // Instantiate contract and initialize contract events
-const contract = new ContractPromise(api, metadata, "<contract address>");
+const contract = new ContractPromise(api, metadata, ADDRESS);
 let contractEvents = new ContractEvents(contract);
 
 // Subscribe to new events
